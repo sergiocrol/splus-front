@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl: 'https://splus-api.herokuapp.com/',
+  apiUrl: 'http://localhost:8000/',
   production: false,
 };
 

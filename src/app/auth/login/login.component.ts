@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 
 import { AuthService } from '../auth.service';
 import { UIService } from 'src/app/shared/ui.service';
+import { CookieService } from 'ngx-cookie-service';
 import * as fromRoot from '../../app.reducer';
 import * as UI from '../../shared/ui.actions';
 import * as Auth from '../../auth/auth.actions';
@@ -25,7 +26,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private store: Store<fromRoot.State>,
     private uiService: UIService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -52,6 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       })
       .subscribe(
         (res) => {
+          this.cookieService.set('esbApitoken', res.body.data.token);
           this.store.dispatch(new Auth.SetAuthenticated());
           this.store.dispatch(new UI.StopLoading());
           this.router.navigate(['/community']);

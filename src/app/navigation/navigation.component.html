@@ -1,0 +1,42 @@
+<mat-toolbar fxLayout fxLayoutAlign="center center" class="menu">
+  <div class="menu-container" fxLayout fxLayoutAlign="space-between center">
+    <img src="{{ getDimension() }}" [routerLink]="['/community']" />
+    <div class="button-container" [matMenuTriggerFor]="menu" #menuTrigger>
+      <ng-lottie
+        width="35px"
+        height="35px"
+        class="notification-animation"
+        [options]="options"
+        *ngIf="isNotification"
+      ></ng-lottie>
+      <div class="menu-button" matRipple>
+        <img [src]="avatar" />
+      </div>
+    </div>
+    <mat-menu #menu="matMenu" class="menu-dialog">
+      <button
+        mat-menu-item
+        (click)="admin()"
+        type="button"
+        fxLayout
+        fxLayoutAlign="left center"
+        *ngIf="isAdmin"
+      >
+        <mat-icon [color]="isNotification ? 'warn' : null"
+          >admin_panel_settings</mat-icon
+        >
+        <span [style]="isNotification ? 'color: red;' : null">Gestión</span>
+      </button>
+      <button
+        mat-menu-item
+        type="button"
+        (click)="logout()"
+        fxLayout
+        fxLayoutAlign="left center"
+      >
+        <mat-icon>logout</mat-icon>
+        <span>Salir</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>

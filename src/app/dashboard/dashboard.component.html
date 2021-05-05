@@ -1,0 +1,131 @@
+<section fxFill>
+  <div class="dashboard" fxLayout="column" fxLayoutAlign="center center">
+    <a [routerLink]="['/community']">
+      <span>
+        <mat-icon>home</mat-icon>
+      </span>
+      Volver a comunidades</a
+    >
+    <div class="dashboard-container" fxLayout="column">
+      <div class="dashboard-container-header" fxLayoutAlign="left center">
+        <span fxLayoutAlign="left center">Administración</span>
+      </div>
+      <mat-progress-bar
+        mode="indeterminate"
+        *ngIf="isLoading$ | async"
+      ></mat-progress-bar>
+      <div class="dashboard-container-body">
+        <mat-tab-group
+          mat-stretch-tabs
+          class="dashboard-tab"
+          *ngIf="!(isLoading$ | async)"
+        >
+          <mat-tab
+            label="Gestión de usuarios"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            class="ff"
+          >
+            <div class="new-user" [formGroup]="myGroup">
+              <div class="new-user-header">
+                <span>Añadir nuevo usuario</span>
+              </div>
+              <div class="new-user-body">
+                <mat-form-field class="input">
+                  <mat-label>Nombre de usuario</mat-label>
+                  <input matInput formControlName="username" />
+                  <mat-error>Campo obligatorio</mat-error>
+                  <ng-content></ng-content>
+                </mat-form-field>
+                <button
+                  type="button"
+                  mat-raised-button
+                  color="accent"
+                  [disabled]="
+                    myGroup.invalid ||
+                    myGroup.get('username')?.value.trim().length === 0 ||
+                    (isLoading$ | async)
+                  "
+                  (click)="addUser()"
+                >
+                  Añadir
+                </button>
+              </div>
+            </div>
+            <div class="user-list">
+              <div class="user-list-header">
+                <span>Lista de usuarios</span>
+              </div>
+              <div class="user-list-body scrollbar-custom">
+                <div *ngFor="let user of users" class="user-item">
+                  <span>{{ user.username }}</span>
+                  <div class="actions">
+                    <div matTooltip="activar/desactivar cuenta">
+                      <mat-slide-toggle
+                        [name]="user.username"
+                        [checked]="user.status === 'active'"
+                        (change)="$event && updateStatus($event)"
+                        [disabled]="isLoading$ | async"
+                      ></mat-slide-toggle>
+                    </div>
+                    <button
+                      type="button"
+                      mat-icon-button
+                      color="warn"
+                      matTooltip="eliminar cuenta"
+                      (click)="deleteUser(user.username)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div>
+                <ng-lottie
+                  width="35px"
+                  height="35px"
+                  class="notification-animation"
+                  [options]="options"
+                  *ngIf="waitingUsers.length > 0"
+                ></ng-lottie>
+              </div>
+              <span>Solicitudes pendientes</span>
+            </ng-template>
+            <div class="waiting-user-list">
+              <div class="user-list-header">
+                <span>Lista de solicitudes</span>
+              </div>
+              <div class="user-list-body scrollbar-custom">
+                <div *ngFor="let user of waitingUsers" class="user-item">
+                  <span>{{ user.username }}</span>
+                  <div class="actions">
+                    <button
+                      mat-raised-button
+                      color="accent"
+                      (click)="acceptRequest(user.username)"
+                      class="dialog-button"
+                    >
+                      Aceptar
+                    </button>
+                    <button
+                      mat-raised-button
+                      color="warn"
+                      (click)="rejectRequest(user.username)"
+                      class="dialog-button"
+                    >
+                      Denegar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+</section>

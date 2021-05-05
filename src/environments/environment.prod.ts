@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  apiUrl: 'https://splus-api.herokuapp.com/',
+  production: true,
 };

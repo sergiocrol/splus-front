@@ -1,0 +1,64 @@
+<section fxLayout="column" fxLayoutAlign="center center">
+  <div
+    class="login-form-container"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+  >
+    <img src="assets/svg/logo2.svg" />
+    <div class="login-form-header">
+      <span>Inicio de sesión</span>
+    </div>
+    <form
+      fxLayout="column"
+      fxLayoutAlign="center center"
+      fxLayoutGap="10px"
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="login-form"
+    >
+      <mat-form-field class="input" appearance="fill">
+        <mat-label>Nombre de usuario</mat-label>
+        <input matInput formControlName="username" />
+        <mat-error>Campo obligatorio</mat-error>
+        <ng-content></ng-content>
+      </mat-form-field>
+      <mat-form-field class="input" appearance="fill">
+        <mat-label>Contraseña</mat-label>
+        <input
+          matInput
+          [type]="hidePassword ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hidePassword = !hidePassword"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidePassword"
+          type="button"
+        >
+          <mat-icon>{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
+        </button>
+        <mat-error>{{ getErrorMessage() }}</mat-error>
+        <ng-content></ng-content>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        [disabled]="loginForm.invalid || (isLoading$ | async)"
+        class="button"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+      >
+        <div class="uploader-status" *ngIf="isLoading$ | async">
+          <mat-spinner diameter="24"></mat-spinner>
+        </div>
+        <span *ngIf="!(isLoading$ | async)">Iniciar sesión</span>
+        <span *ngIf="isLoading$ | async">Iniciando</span>
+      </button>
+    </form>
+  </div>
+</section>

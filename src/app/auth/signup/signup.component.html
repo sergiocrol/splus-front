@@ -1,0 +1,20 @@
+<h1 mat-dialog-title class="dialog-title">{{ title }}</h1>
+<div mat-dialog-content class="dialog-subtitle">
+  <p>{{ subtitle }}</p>
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: center">
+  <div
+    mat-dialog-actions
+    style="width: 80%; display: flex; justify-content: center"
+  >
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onClick()"
+      class="dialog-button"
+      [disabled]="isLoading$ | async"
+    >
+      {{ buttonText }}
+    </button>
+  </div>
+</div>

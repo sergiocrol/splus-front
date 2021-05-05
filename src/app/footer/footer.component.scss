@@ -1,0 +1,17 @@
+p {
+  width: 98%;
+  max-width: 1200px;
+  text-align: right;
+  padding-right: 20px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: dimgray;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,43 @@
+<mat-card
+  matRipple
+  class="community-card"
+  fxLayout="row"
+  fxLayout.xs="column"
+  (click)="clickCard()"
+>
+  <div class="image-container">
+    <img
+      mat-card-image
+      [src]="
+        'https://samsung.sumtotal.host/Core/' +
+        community?.logoIdentifier +
+        '.sumtfile?type=2'
+      "
+      alt="Photo of a Shiba Inu"
+    />
+  </div>
+  <mat-card-content class="community-card-content">
+    <h1>
+      {{ community?.name }}
+    </h1>
+    <p>{{ community?.description }}</p>
+    <div class="others" fxLayout="row">
+      <div>
+        <mat-icon aria-hidden="false" aria-label="puntuación" class="star"
+          >grade</mat-icon
+        >
+        <span>
+          {{ community?.avgRating }}
+        </span>
+      </div>
+      <div>
+        <mat-icon aria-hidden="false" aria-label="miembros" class="members"
+          >groups</mat-icon
+        >
+        <span>
+          {{ community?.totalMemberCount }}
+        </span>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

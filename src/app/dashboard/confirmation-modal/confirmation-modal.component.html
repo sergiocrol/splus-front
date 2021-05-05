@@ -1,0 +1,27 @@
+<h1 mat-dialog-title class="dialog-title">{{ title }}</h1>
+<div mat-dialog-content class="dialog-subtitle">
+  <p>{{ subtitle }}</p>
+</div>
+<div mat-dialog-actions style="display: flex; justify-content: center">
+  <div
+    mat-dialog-actions
+    style="width: 80%; display: flex; justify-content: center"
+  >
+    <button
+      mat-raised-button
+      color="accent"
+      [mat-dialog-close]="true"
+      class="dialog-button"
+    >
+      Sí
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="onNoClick()"
+      class="dialog-button"
+    >
+      No
+    </button>
+  </div>
+</div>

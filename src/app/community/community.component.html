@@ -1,0 +1,24 @@
+<section fxFill>
+  <div
+    class="community-container"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+  >
+    <div class="cards-container" fxLayout="column">
+      <div class="cards-container-header" fxLayoutAlign="left center">
+        <span fxLayoutAlign="left center">Comunidades</span>
+      </div>
+      <mat-progress-bar
+        mode="indeterminate"
+        *ngIf="isLoading$ | async"
+      ></mat-progress-bar>
+      <div class="cards-container-body scrollbar-custom">
+        <app-community-card
+          *ngFor="let community of communities"
+          class="community-card"
+          [community]="community"
+        ></app-community-card>
+      </div>
+    </div>
+  </div>
+</section>

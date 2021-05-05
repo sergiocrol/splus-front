@@ -1,0 +1,152 @@
+<section fxFill>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <a [routerLink]="['/community']">
+      <span>
+        <mat-icon>home</mat-icon>
+      </span>
+      Volver a comunidades</a
+    >
+    <div class="discussions-container" fxLayout="column">
+      <div class="discussions-container-header" fxLayoutAlign="left center">
+        <span fxLayoutAlign="left center">{{ communityTitle }}</span>
+      </div>
+      <div class="discussions-container-body scrollbar-custom">
+        <mat-progress-bar
+          mode="indeterminate"
+          *ngIf="isLoading$ | async"
+        ></mat-progress-bar>
+        <div
+          class="buttons"
+          fxLayout="row"
+          fxLayoutAlign="space-between center"
+          *ngIf="!(isLoading$ | async)"
+        >
+          <mat-form-field class="filter">
+            <mat-label class="filter-label">Filtro</mat-label>
+            <input
+              class="filter-input"
+              matInput
+              (keyup)="applyFilter($event)"
+              placeholder="Buscar por título"
+              #input
+            />
+          </mat-form-field>
+          <div class="buttons-container">
+            <span
+              matTooltip="Selecciona un campo"
+              [matTooltipDisabled]="selection.selected.length > 0"
+            >
+              <button
+                mat-raised-button
+                color="accent"
+                [disabled]="selection.selected.length === 0"
+              >
+                fotos
+              </button>
+            </span>
+            <span
+              matTooltip="Selecciona un campo"
+              [matTooltipDisabled]="selection.selected.length > 0"
+            >
+              <button
+                mat-raised-button
+                color="accent"
+                [disabled]="selection.selected.length === 0"
+                (click)="createExcel()"
+              >
+                excel
+              </button>
+            </span>
+          </div>
+        </div>
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          class="mat-elevation-z8 table"
+          matSort
+          *ngIf="!(isLoading$ | async)"
+        >
+          <!-- Selection column -->
+          <ng-container matColumnDef="select" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? checkData() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                [aria-label]="checkboxLabel()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? checkData(row) : null"
+                [checked]="selection.isSelected(row)"
+                [aria-label]="checkboxLabel(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+          <!-- selection.toggle(row) -->
+          <!-- Título column  -->
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Título</th>
+            <td mat-cell *matCellDef="let discussion">
+              <p class="title">{{ discussion.title }}</p>
+              <p class="description">{{ discussion.description }}</p>
+            </td>
+          </ng-container>
+
+          <!-- Autor/a column  -->
+          <ng-container matColumnDef="author">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              [style.display]="isHidden()"
+            >
+              Autor/a
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let discussion"
+              [style.display]="isHidden()"
+            >
+              <p class="name">{{ discussion.author.fullName }}</p>
+            </td>
+          </ng-container>
+
+          <!-- fecha column  -->
+          <ng-container matColumnDef="displayDate">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              [style.display]="isHidden()"
+            >
+              Fecha
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let discussion"
+              [style.display]="isHidden()"
+            >
+              {{ discussion.displayDate }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            (click)="selection.toggle(row)"
+          ></tr>
+        </table>
+      </div>
+      <mat-paginator
+        [pageSizeOptions]="[10, 25, 100]"
+        class="paginator"
+      ></mat-paginator>
+    </div>
+  </div>
+</section>

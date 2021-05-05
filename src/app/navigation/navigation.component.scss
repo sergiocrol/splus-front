@@ -1,0 +1,54 @@
+.menu {
+  background-color: white;
+}
+
+.menu-container {
+  width: 98%;
+  max-width: 1200px;
+  height: 100%;
+
+  img {
+    width: 200px;
+    cursor: pointer;
+
+    @media (max-width: 520px) {
+      width: 50px;
+    }
+  }
+
+  .menu-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: tomato;
+    cursor: pointer;
+    border: 2px solid rgb(32, 32, 32);
+
+    img {
+      width: 100%;
+    }
+
+    @media (max-width: 520px) {
+      width: 45px;
+      height: 45px;
+    }
+  }
+}
+
+::ng-deep .cdk-overlay-connected-position-bounding-box {
+  position: absolute;
+  margin-top: 0.8rem;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.notification-animation {
+  position: absolute;
+  left: 54%;
+  z-index: 9;
+  bottom: -12px;
+}

@@ -1,1 +1,102 @@
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+$mat-primary-scheme: (
+  100: #8d8d8d,
+  500: #000,
+  700: #000,
+  contrast: (
+    100: rgba(0, 0, 0, 0.87),
+    500: #ffffff,
+    700: #ffffff,
+  ),
+);
+$mat-accent-scheme: (
+  100: #5397ef,
+  500: #2265bf,
+  700: #073e89,
+  contrast: (
+    100: rgba(255, 255, 255, 0.87),
+    500: rgba(255, 255, 255, 0.87),
+    700: #ffffff,
+  ),
+);
+$mat-primary-palette: mat-palette($mat-primary-scheme);
+$mat-accent-palette: mat-palette($mat-accent-scheme);
+
+$app-light-theme: mat-light-theme($mat-primary-palette, $mat-accent-palette);
+
+@include angular-material-theme($app-light-theme);
+
+// following section is for dark mode.
+// use appropriate class name for darkMode
+$app-dark-theme: mat-dark-theme($mat-primary-palette, $mat-accent-palette);
+.darkMode {
+  @include angular-material-theme($app-dark-theme);
+}
+
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.snackbar-error {
+  background-color: #f56565;
+  color: white;
+  font-weight: 500;
+  button {
+    color: white;
+    font-weight: bolder;
+  }
+}
+
+.snackbar-success {
+  background-color: #48bb78;
+  color: white;
+  font-weight: 500;
+  button {
+    color: white;
+    font-weight: bolder;
+  }
+}
+
+.scrollbar-custom {
+  scrollbar-color: #2d7fef transparent;
+  scrollbar-width: thin;
+}
+
+@media (min-width: 768px) {
+  .scrollbar-custom {
+    top: 80px !important;
+  }
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px transparent;
+  background-color: #f5f5f5;
+}
+
+.scrollbar-custom::-webkit-scrollbar {
+  width: 6px;
+  background-color: #f5f5f5;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: linear-gradient(0deg, #48dcd9 0%, #2d7fef 100%);
+}

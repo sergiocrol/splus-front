@@ -1,0 +1,62 @@
+.cards-container {
+  width: 80%;
+  max-width: 50rem;
+  margin-top: 6rem;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+  @media (max-width: 520px) {
+    margin-top: 5rem;
+  }
+}
+
+.cards-container-header {
+  height: 5rem;
+  background-color: black;
+  color: white;
+  font-size: 3.5rem;
+  font-weight: bold;
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  @media (max-width: 520px) {
+    font-size: 2.4rem;
+  }
+
+  span {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(90deg, #007cf0, #00dfd8);
+    position: relative;
+    z-index: 1;
+    height: 100%;
+  }
+}
+
+.cards-container-body {
+  height: 500px;
+  padding: 20px 0;
+  overflow-y: auto;
+  background-color: rgb(245, 245, 245);
+}
+
+.community-card {
+  display: flex;
+  justify-content: center;
+}
+
+::ng-deep .mat-progress-bar {
+  height: 6px !important;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  // background-color: #1e457c;
+  background: linear-gradient(45deg, #00dfd8 0%, #007cf0 100%);
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background: #e4e8eb;
+}

@@ -33,29 +33,6 @@ export class CommunityComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // this.communities = communitiesMock.body.data.communities.map(
-    //   (c: Community) => {
-    //     return {
-    //       id: c.id,
-    //       name: c.name,
-    //       description: c.description,
-    //       logoIdentifier: c.logoIdentifier,
-    //       avgRating: c.avgRating,
-    //       totalMemberCount: c.totalMemberCount,
-    //       discussionCount: c.discussionCount,
-    //       blogCount: c.blogCount,
-    //     };
-    //   }
-    // );
-    // this.store.dispatch(new Com.SetCommunities({ ...this.communities }));
-    // this.store
-    //   .pipe(select(fromCommunity.getCommunities), take(1))
-    //   .subscribe((res) => {
-    //     console.log(Object.keys(res).length === 0);
-    //     Object.keys(res).length !== 0 ? console.log('Sí') : console.log('No');
-    //   });
-    // console.log(this.communities);
-
     this.isLoading$ = this.store.select(fromRoot.getIsLoading);
     this.fbSubs.push(
       this.store
@@ -87,7 +64,6 @@ export class CommunityComponent implements OnInit, OnDestroy {
                   );
                 },
                 (error) => {
-                  console.log(error);
                   this.store.dispatch(new UI.StopLoading());
                   this.uiService.showSnackbar(
                     'La sesión ha caducado.',

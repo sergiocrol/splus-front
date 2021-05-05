@@ -19,9 +19,13 @@
 }
 
 .login-form-container {
-  margin-top: 10rem;
+  // margin-top: 10rem;
   max-width: 30rem;
   width: 90%;
+
+  @media (max-width: 520px) {
+    // margin-top: 6rem;
+  }
 
   img {
     @media (max-width: 520px) {

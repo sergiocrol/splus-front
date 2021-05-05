@@ -31,7 +31,8 @@
               "src/assets",
               "src/assets/svg/*",
               "src/assets/avatar/*",
-              "src/assets/animation/*"
+              "src/assets/animation/*",
+              "src/assets/placeholder/*"
             ],
             "styles": ["src/styles.scss"],
             "scripts": []

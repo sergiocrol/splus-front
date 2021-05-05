@@ -101,7 +101,6 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
         : this.dataSource &&
           this.dataSource.data.forEach((row) => this.selection.select(row));
     }
-    console.log(this.selection);
   }
 
   applyFilter(event: Event) {

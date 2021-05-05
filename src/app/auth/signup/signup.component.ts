@@ -44,7 +44,6 @@ export class SignupComponent implements OnInit, OnDestroy {
       this.store.dispatch(new UI.StartLoading());
       this.sub = this.authService.signup(this.data.username).subscribe(
         (res) => {
-          console.log(res);
           this.uiService.showSnackbar(
             '¡Solicitud enviada correctamente!',
             'cerrar',

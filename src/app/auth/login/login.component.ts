@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       })
       .subscribe(
         (res) => {
-          this.cookieService.set('esbApitoken', res.body.data.token);
+          this.cookieService.set('esbApitoken', res.body.token);
           this.store.dispatch(new Auth.SetAuthenticated());
           this.store.dispatch(new UI.StopLoading());
           this.router.navigate(['/community']);

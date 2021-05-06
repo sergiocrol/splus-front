@@ -32,8 +32,7 @@
               "src/assets/svg/*",
               "src/assets/avatar/*",
               "src/assets/animation/*",
-              "src/assets/placeholder/*",
-              "src/_redirects"
+              "src/assets/placeholder/*"
             ],
             "styles": ["src/styles.scss"],
             "scripts": []

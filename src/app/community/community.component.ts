@@ -44,6 +44,7 @@ export class CommunityComponent implements OnInit, OnDestroy {
             this.fbSubs.push(
               this.communityService.fetchCommunities().subscribe(
                 (res) => {
+                  console.log(res);
                   this.store.dispatch(new UI.StopLoading());
                   this.communities = res.body.data.communities.map(
                     (c: Community) => {

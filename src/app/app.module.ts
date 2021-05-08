@@ -23,7 +23,10 @@ import { reducers } from './app.reducer';
 import { environment } from '../environments/environment';
 import { CommunityService } from './community/community.service';
 import { DashboardService } from './dashboard/dashboard.service';
+import { FinderService } from './finder/finder.service';
 import { FooterComponent } from './footer/footer.component';
+import { FinderComponent } from './finder/finder.component';
+import { UserFinderComponent } from './finder/user-finder/user-finder.component';
 
 export function tokenGetter() {
   return localStorage.getItem('esbApitoken');
@@ -34,7 +37,13 @@ export function playerFactory() {
 }
 
 @NgModule({
-  declarations: [AppComponent, NavigationComponent, FooterComponent],
+  declarations: [
+    AppComponent,
+    NavigationComponent,
+    FooterComponent,
+    FinderComponent,
+    UserFinderComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -56,6 +65,7 @@ export function playerFactory() {
     CookieService,
     ExcelService,
     DashboardService,
+    FinderService,
   ],
   bootstrap: [AppComponent],
 })

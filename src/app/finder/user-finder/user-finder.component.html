@@ -1,0 +1,27 @@
+<h1>Buscar comercial por id</h1>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Id del comercial</mat-label>
+    <input matInput formControlName="userId" />
+    <mat-error>{{ getErrorMessage() }}</mat-error>
+  </mat-form-field>
+  <button
+    mat-raised-button
+    type="submit"
+    color="primary"
+    [disabled]="userForm.invalid || (isLoading$ | async)"
+    class="button"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+  >
+    <div class="uploader-status" *ngIf="isLoading$ | async">
+      <mat-spinner diameter="24"></mat-spinner>
+    </div>
+    <span *ngIf="!(isLoading$ | async)">Iniciar sesión</span>
+    <span *ngIf="isLoading$ | async">Iniciando</span>
+  </button>
+</form>
+<div *ngIf="!(isLoading$ | async)">
+  <p>{{ orgData[1] }}</p>
+  <p>{{ orgData[3] }}</p>
+</div>

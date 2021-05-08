@@ -51,6 +51,9 @@ export class FinderComponent implements OnInit, OnDestroy {
     this.authSub = this.authService.login(authData).subscribe(
       (res) => {
         this.cookieService.set('esbApitoken', res.body.token);
+        res.body.cookies.forEach((cookie: any) =>
+          this.cookieService.set(cookie['name'], cookie['value'])
+        );
         this.store.dispatch(new UI.StopLoading());
         this.router.navigate(['/user-finder']);
       },

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { UIService } from 'src/app/shared/ui.service';
 import { FinderService } from '../finder.service';
@@ -45,8 +46,10 @@ export class UserFinderComponent implements OnInit, OnDestroy {
     this.store.dispatch(new UI.StartLoading());
     this.finderSub = this.finderService
       .findUser(this.userForm.value.userId)
+      .pipe(take(1))
       .subscribe(
         (res) => {
+          if (!res.body.data.length) return;
           this.store.dispatch(new UI.StopLoading());
           console.log(res);
           this.orgData = res.body.data;

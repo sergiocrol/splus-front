@@ -55,6 +55,38 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
     private excelService: ExcelService
   ) {}
 
+  isMedia() {
+    const selectedItems = this.selection.selected.filter(dis => dis.fileIdentifier);
+    return selectedItems.length === 0
+  }
+
+  async downloadMedia() {
+    const selectedFiles = this.selection.selected.map(dis => {
+      return {
+        uri: dis.fileIdentifier,
+        name: dis.title
+      }
+    });
+    const uri = "https://samsung.sumtotal.host/Core/6c8b56a15bdb46548417a3f04f2264c9.jpg.sumtfile?type=2";
+    const response = await fetch(uri, {
+      method: 'GET',
+      credentials:'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    console.log(response);
+    const blob = await response.blob();
+    console.log(blob)
+    var url = window.URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = "filename.mp3";
+    document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+    a.click();    
+    a.remove();
+  }
+
   createExcel() {
     const selectedJsonData = this.selection.selected.map((el) => {
       return {
@@ -152,16 +184,19 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
 
         this.store.dispatch(new UI.StartLoading());
         this.fetchCall$ =
-          blogCount === '0'
-            ? this.communityService.fetchDiscussions({
-                communityId,
-                discussionsCount,
-              })
-            : this.communityService.fetchBlog({ communityId, blogCount });
+          blogCount === '0' && discussionsCount === '0'
+            ? this.communityService.fetchActivity({ communityId })
+            : blogCount === '0'
+              ? this.communityService.fetchDiscussions({
+                  communityId,
+                  discussionsCount,
+                })
+              : this.communityService.fetchBlog({ communityId, blogCount });
 
         this.fbSubs.push(
           this.fetchCall$.subscribe(
             (res) => {
+              console.log(res);
               this.store.dispatch(new UI.StopLoading());
               this.discussions = res;
               this.dataSource = new MatTableDataSource(this.discussions);

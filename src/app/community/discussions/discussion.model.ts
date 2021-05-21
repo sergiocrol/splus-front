@@ -6,6 +6,7 @@ export interface Discussion {
     id: number;
     fullName: string;
   };
+  fileIdentifier?: string;
   createdDate: string;
   displayDate: string;
 }

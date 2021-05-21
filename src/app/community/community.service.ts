@@ -16,6 +16,7 @@ export class CommunityService {
   private urlCommunity = `${environment.apiUrl}communities`;
   private urlDiscussions = `${environment.apiUrl}discussions`;
   private urlBlog = `${environment.apiUrl}blog`;
+  private urlActivity = `${environment.apiUrl}activity`;
   private httpOptions = {
     withCredentials: true,
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -100,6 +101,40 @@ export class CommunityService {
               ),
               displayDate: new Intl.DateTimeFormat('es-ES').format(
                 new Date(Date.parse(blg.displayDate))
+              ),
+            };
+          })
+        )
+      );
+  }
+
+  fetchActivity({
+    communityId
+  }: {
+    communityId: string;
+  }): Observable<any> {
+    return this.http
+      .get<any>(
+        `${this.urlActivity}?communityId=${communityId}`,
+        this.httpOptions
+      )
+      .pipe(
+        map((data: any) =>
+          data.body.data.files.map((file: any) => {
+            return {
+              id: file.id,
+              title: file.title,
+              description: this.parseElement(file.description),
+              author: {
+                id: file.author.id,
+                fullName: file.author.fullName,
+              },
+              fileIdentifier: `https://samsung.sumtotal.host/Core/${file.fileIdentifier}.sumtfile?type=2`,
+              createdDate: new Intl.DateTimeFormat('es-ES').format(
+                new Date(Date.parse(file.createdDate))
+              ),
+              displayDate: new Intl.DateTimeFormat('es-ES').format(
+                new Date(Date.parse(file.displayDate))
               ),
             };
           })

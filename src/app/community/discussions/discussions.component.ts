@@ -61,30 +61,42 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async downloadMedia() {
-    const selectedFiles = this.selection.selected.map(dis => {
-      return {
-        uri: dis.fileIdentifier,
-        name: dis.title
+    // const selectedFiles = this.selection.selected.map(dis => {
+    //   return {
+    //     uri: dis.fileIdentifier,
+    //     name: dis.title
+    //   }
+    // });
+    const url = "https://salty-earth-46109.herokuapp.com/https://samsung.sumtotal.host/Core/4d5ce68cb03442cfbb1371fb843198a9.mp3.sumtfile?type=2";
+    this.communityService.fetchMedia({ url }).subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.log(err);
       }
-    });
-    const uri = "https://samsung.sumtotal.host/Core/6c8b56a15bdb46548417a3f04f2264c9.jpg.sumtfile?type=2";
-    const response = await fetch(uri, {
-      method: 'GET',
-      credentials:'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    console.log(response);
-    const blob = await response.blob();
-    console.log(blob)
-    var url = window.URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = "filename.mp3";
-    document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-    a.click();    
-    a.remove();
+    )
+    // const response = await fetch("https://samsung.sumtotal.host/Core/4d5ce68cb03442cfbb1371fb843198a9.mp3.sumtfile?type=2", {
+    //   "headers": {
+    //     "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"90\", \"Google Chrome\";v=\"90\"",
+    //     "sec-ch-ua-mobile": "?0",
+    //     "upgrade-insecure-requests": "1"
+    //   },
+    //   "body": null,
+    //   "method": "GET",
+    //   "mode": "cors",
+    //   "credentials": "omit"
+    // });
+    // console.log(response);
+    // const blob = await response.blob();
+    // console.log(blob)
+    // var url = window.URL.createObjectURL(blob);
+    // var a = document.createElement('a');
+    // a.href = url;
+    // a.download = "filename.mp3";
+    // document.body.appendChild(a);
+    // a.click();    
+    // a.remove();
   }
 
   createExcel() {

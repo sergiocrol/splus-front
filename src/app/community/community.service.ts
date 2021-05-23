@@ -141,4 +141,28 @@ export class CommunityService {
         )
       );
   }
+
+  fetchMedia({ url }: { url: string}): Observable<any> {
+    const httpOptionsMedia = {
+      withCredentials: true,
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      observe: 'response' as 'response'
+    };
+    return this.http.get<any>(url, httpOptionsMedia);
+  }
 }
+
+
+// fetch("https://samsung.sumtotal.host/Core/4d5ce68cb03442cfbb1371fb843198a9.mp3.sumtfile?type=2", {
+//   "headers": {
+//     "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"90\", \"Google Chrome\";v=\"90\"",
+//     "sec-ch-ua-mobile": "?0",
+//     "upgrade-insecure-requests": "1"
+//   },
+//   "referrer": "https://samsung.sumtotal.host/core/socialCommunities/609c09aec25776264c107709",
+//   "referrerPolicy": "strict-origin-when-cross-origin",
+//   "body": null,
+//   "method": "GET",
+//   "mode": "cors",
+//   "credentials": "omit"
+// });

@@ -67,8 +67,9 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
     //     name: dis.title
     //   }
     // });
+    // https://salty-earth-46109.herokuapp.com/
     // const url = "https://samsung.sumtotal.host/Broker/Token/Saml11.ashx?wa=wsignin1.0&wtrealm=https://samsung.sumtotal.host/core/&wreply=http://samsung.sumtotal.host/Core/4d5ce68cb03442cfbb1371fb843198a9.mp3.sumtfile?type=2";
-    const url = "https://samsung.sumtotal.host/Core/4d5ce68cb03442cfbb1371fb843198a9.mp3.sumtfile?type=2";
+    const url = "https://salty-earth-46109.herokuapp.com/https://samsung.sumtotal.host/Core/4d5ce68cb03442cfbb1371fb843198a9.mp3.sumtfile?type=2";
     this.communityService.fetchMedia({ url }).subscribe(
       (res) => {
         console.log(res);

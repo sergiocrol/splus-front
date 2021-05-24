@@ -230,8 +230,10 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
               this.store.dispatch(new UI.StopLoading());
               this.discussions = res;
               this.dataSource = new MatTableDataSource(this.discussions);
-              this.dataSource.paginator = this.paginator;
-              this.dataSource.sort = this.sort;
+              setTimeout(() => {
+                this.dataSource.paginator = this.paginator;
+                this.dataSource.sort = this.sort;
+              });
               this.dataSource.sortingDataAccessor = (item: any, property) => {
                 switch (property) {
                   case 'author':

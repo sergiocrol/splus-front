@@ -131,7 +131,7 @@ export class CommunityService {
                 id: file.author.id,
                 fullName: file.author.fullName,
               },
-              fileIdentifier: `https://samsung.sumtotal.host/Core/${file.fileIdentifier}.sumtfile?type=2`,
+              fileIdentifier: file.fileIdentifier,
               createdDate: new Intl.DateTimeFormat('es-ES').format(
                 new Date(Date.parse(file.createdDate))
               ),
@@ -144,7 +144,7 @@ export class CommunityService {
       );
   }
 
-  fetchMedia(selectedId: number): Observable<any> {
-    return this.http.get<any>(`${this.urlMedia}?fileId=${selectedId}`, this.httpOptions);
+  fetchMedia(fileId: string | undefined, userId: number): Observable<any> {
+    return this.http.get<any>(`${this.urlMedia}?fileId=${fileId}&userId=${userId}`, this.httpOptions);
   }
 }

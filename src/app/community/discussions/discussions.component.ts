@@ -64,7 +64,12 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   async downloadMedia() {
     const jszip = new JSZip();
-    const selectedMedia = this.selection.selected.map((el) => el.author.id);
+    const selectedMedia = this.selection.selected.map((el) => {
+      return {
+        fileId: el.fileIdentifier,
+        userId: el.author.id
+      }
+    });
     type selectedObjectKeys = {
       [key: number]: string
     }
@@ -74,14 +79,14 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
       selectedObject[id] = el.title;
     })
     this.mediaLoading = true;
-    const rowObjects$ = selectedMedia.map(selectedId => this.communityService.fetchMedia(selectedId));
+    const rowObjects$ = selectedMedia.map(({ fileId, userId }) => this.communityService.fetchMedia(fileId, userId));
 
     this.fbSubs.push(
       forkJoin(rowObjects$).subscribe(
         (object:any) => {
           object.forEach((res: any) => {
-            const base = res.body.data[0].data;
-            const filename = res.body.data[0].name;
+            const base = res.body.data.data;
+            const filename = res.body.data.name;
             const byteCharacters = atob(base);
             const byteNumbers = new Array(byteCharacters.length);
             for (let i = 0; i < byteCharacters.length; i++) {
@@ -193,10 +198,10 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
     //       return item[property];
     //   }
     // };
-    this.mediaLoading = true;
-    setTimeout(() => {
-      this.mediaLoading = false;
-    }, 10000);
+    // this.mediaLoading = true;
+    // setTimeout(() => {
+    //   this.mediaLoading = false;
+    // }, 10000);
 
     this.fbSubs.push(
       this.aroute.params.pipe(first()).subscribe((param) => {

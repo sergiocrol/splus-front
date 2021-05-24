@@ -65,29 +65,47 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
   async downloadMedia() {
     const jszip = new JSZip();
     const selectedMedia = this.selection.selected.map((el) => el.author.id);
+    type selectedObjectKeys = {
+      [key: number]: string
+    }
+    let selectedObject: selectedObjectKeys = {};
+    this.selection.selected.forEach((el) => {
+      const id = el.author.id;
+      selectedObject[id] = el.title;
+    })
     this.mediaLoading = true;
     const rowObjects$ = selectedMedia.map(selectedId => this.communityService.fetchMedia(selectedId));
 
     this.fbSubs.push(
-      forkJoin(rowObjects$).subscribe((object:any) => {
-        object.forEach((res: any) => {
-          console.log(res)
-          const base = res.body.data[0].data;
-          const filename = res.body.data[0].name;
-          const byteCharacters = atob(base);
-          const byteNumbers = new Array(byteCharacters.length);
-          for (let i = 0; i < byteCharacters.length; i++) {
-              byteNumbers[i] = byteCharacters.charCodeAt(i);
-          }
-          const byteArray = new Uint8Array(byteNumbers);
-          const blob = new Blob([byteArray], {type: 'audio/mpeg'});
-          jszip.file(`${filename}.mp3`, blob);
-        });
-        jszip.generateAsync({ type: 'blob' }).then((content) => {
-          saveAs(content, 'media.zip');
-          this.mediaLoading = false;
-        });
-      })
+      forkJoin(rowObjects$).subscribe(
+        (object:any) => {
+          object.forEach((res: any) => {
+            const base = res.body.data[0].data;
+            const filename = res.body.data[0].name;
+            const byteCharacters = atob(base);
+            const byteNumbers = new Array(byteCharacters.length);
+            for (let i = 0; i < byteCharacters.length; i++) {
+                byteNumbers[i] = byteCharacters.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            const blob = new Blob([byteArray], {type: 'audio/mpeg'});
+            jszip.file(`${selectedObject[filename]}.mp3`, blob);
+          });
+          jszip.generateAsync({ type: 'blob' }).then((content) => {
+            saveAs(content, 'media.zip');
+            this.mediaLoading = false;
+          });
+        },
+        (err) => {
+          this.uiService.showSnackbar(
+            'Algo ha ido mal. Vuelva a intentarlo',
+            'cerrar',
+            5000,
+            'error'
+          );
+          this.authService.logout();
+        }
+      )
     );
   }
 
@@ -175,6 +193,10 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
     //       return item[property];
     //   }
     // };
+    this.mediaLoading = true;
+    setTimeout(() => {
+      this.mediaLoading = false;
+    }, 10000);
 
     this.fbSubs.push(
       this.aroute.params.pipe(first()).subscribe((param) => {
@@ -200,7 +222,6 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.fbSubs.push(
           this.fetchCall$.subscribe(
             (res) => {
-              console.log(res);
               this.store.dispatch(new UI.StopLoading());
               this.discussions = res;
               this.dataSource = new MatTableDataSource(this.discussions);

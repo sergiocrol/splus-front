@@ -5,6 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import * as JSZip from 'jszip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,7 +13,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Store } from '@ngrx/store';
 import { first } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, forkJoin } from 'rxjs';
 
 import { UIService } from 'src/app/shared/ui.service';
 import { CommunityService } from '../community.service';
@@ -40,6 +41,7 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
   isLoading$!: Observable<boolean>;
   fetchCall$!: Observable<any>;
   fbSubs: Subscription[] = [];
+  mediaLoading = false;
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -61,44 +63,32 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   async downloadMedia() {
-    // const selectedFiles = this.selection.selected.map(dis => {
-    //   return {
-    //     uri: dis.fileIdentifier,
-    //     name: dis.title
-    //   }
-    // });
-    // https://salty-earth-46109.herokuapp.com/
-    // const url = "https://samsung.sumtotal.host/Broker/Token/Saml11.ashx?wa=wsignin1.0&wtrealm=https://samsung.sumtotal.host/core/&wreply=http://samsung.sumtotal.host/Core/4d5ce68cb03442cfbb1371fb843198a9.mp3.sumtfile?type=2";
-    const url = "https://salty-earth-46109.herokuapp.com/https://samsung.sumtotal.host/Core/4d5ce68cb03442cfbb1371fb843198a9.mp3.sumtfile?type=2";
-    this.communityService.fetchMedia({ url }).subscribe(
-      (res) => {
-        console.log(res);
-      },
-      (err) => {
-        console.log(err);
-      }
-    )
-    // const response = await fetch("https://samsung.sumtotal.host/Core/4d5ce68cb03442cfbb1371fb843198a9.mp3.sumtfile?type=2", {
-    //   "headers": {
-    //     "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"90\", \"Google Chrome\";v=\"90\"",
-    //     "sec-ch-ua-mobile": "?0",
-    //     "upgrade-insecure-requests": "1"
-    //   },
-    //   "body": null,
-    //   "method": "GET",
-    //   "mode": "cors",
-    //   "credentials": "omit"
-    // });
-    // console.log(response);
-    // const blob = await response.blob();
-    // console.log(blob)
-    // var url = window.URL.createObjectURL(blob);
-    // var a = document.createElement('a');
-    // a.href = url;
-    // a.download = "filename.mp3";
-    // document.body.appendChild(a);
-    // a.click();    
-    // a.remove();
+    const jszip = new JSZip();
+    const selectedMedia = this.selection.selected.map((el) => el.author.id);
+    this.mediaLoading = true;
+    const rowObjects$ = selectedMedia.map(selectedId => this.communityService.fetchMedia(selectedId));
+
+    this.fbSubs.push(
+      forkJoin(rowObjects$).subscribe((object:any) => {
+        object.forEach((res: any) => {
+          console.log(res)
+          const base = res.body.data[0].data;
+          const filename = res.body.data[0].name;
+          const byteCharacters = atob(base);
+          const byteNumbers = new Array(byteCharacters.length);
+          for (let i = 0; i < byteCharacters.length; i++) {
+              byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          const byteArray = new Uint8Array(byteNumbers);
+          const blob = new Blob([byteArray], {type: 'audio/mpeg'});
+          jszip.file(`${filename}.mp3`, blob);
+        });
+        jszip.generateAsync({ type: 'blob' }).then((content) => {
+          saveAs(content, 'media.zip');
+          this.mediaLoading = false;
+        });
+      })
+    );
   }
 
   createExcel() {

@@ -39,10 +39,16 @@
               <button
                 mat-raised-button
                 color="accent"
-                [disabled]="isMedia()"
+                [disabled]="isMedia() || mediaLoading"
                 (click)="downloadMedia()"
               >
-                media
+                <ng-container *ngIf="mediaLoading">
+                  <div class="uploader-status" *ngIf="mediaLoading" style="display: inline-block;">
+                    <mat-spinner diameter="16"></mat-spinner>
+                  </div>
+                  <span style="display: inline-block; margin-left: 5px;">espere</span>
+                </ng-container>
+                <ng-container *ngIf="!mediaLoading">media</ng-container>
               </button>
             </span>
             <span

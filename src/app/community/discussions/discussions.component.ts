@@ -178,31 +178,6 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // this.isLoading$ = this.store.select(fromRoot.getIsLoading);
-    // this.aroute.params.pipe(first()).subscribe((param) => {
-    //   const communityId = param.id;
-    //   const discussionsCount =
-    //     this.aroute.snapshot.paramMap.get('discussionsCount') || '60';
-    //   this.communityTitle =
-    //     this.aroute.snapshot.paramMap.get('communityTitle') || '';
-    // });
-    // this.discussions = discussionsMock.body.data.discussions;
-    // this.dataSource = new MatTableDataSource(this.discussions);
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
-    // this.dataSource.sortingDataAccessor = (item: any, property) => {
-    //   switch (property) {
-    //     case 'author':
-    //       return item.author.fullName;
-    //     default:
-    //       return item[property];
-    //   }
-    // };
-    // this.mediaLoading = true;
-    // setTimeout(() => {
-    //   this.mediaLoading = false;
-    // }, 10000);
-
     this.fbSubs.push(
       this.aroute.params.pipe(first()).subscribe((param) => {
         this.isLoading$ = this.store.select(fromRoot.getIsLoading);

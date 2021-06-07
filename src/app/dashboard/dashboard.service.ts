@@ -30,7 +30,7 @@ export class DashboardService {
       observe: 'response' as 'response',
       body: { username },
     };
-    // return this.http.delete<any>(this.user, { withCredentials: true, headers: new HttpHeaders({ 'Content-Type': 'application/json' }),  body: { username }, });
+    
     return this.http.request<any>('delete', this.user, deleteHttpOptions);
   }
 

@@ -11,7 +11,6 @@ import * as fromRoot from '../app.reducer';
 import * as UI from '../shared/ui.actions';
 import * as Com from '../community/community.actions';
 
-import { communitiesMock } from '../mock/communities';
 import { AuthService } from '../auth/auth.service';
 
 @Component({

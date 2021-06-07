@@ -28,8 +28,6 @@ $app-light-theme: mat-light-theme($mat-primary-palette, $mat-accent-palette);
 
 @include angular-material-theme($app-light-theme);
 
-// following section is for dark mode.
-// use appropriate class name for darkMode
 $app-dark-theme: mat-dark-theme($mat-primary-palette, $mat-accent-palette);
 .darkMode {
   @include angular-material-theme($app-dark-theme);

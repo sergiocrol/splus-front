@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }) {
     const status = event.checked ? 'active' : 'blocked';
     const username = event.source.name;
-    // this.store.dispatch(new UI.StartLoading());
+
     this.fbSubs.push(
       this.dashboardService.updateUser(username, status).subscribe(
         (res) => {
@@ -95,7 +95,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           if (event.source.message) {
             window.location.reload();
           }
-          // this.store.dispatch(new UI.StopLoading());
         },
         (err) => {
           this.uiService.showSnackbar(
@@ -104,7 +103,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
             5000,
             'error'
           );
-          // this.store.dispatch(new UI.StopLoading());
         }
       )
     );
@@ -129,7 +127,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((res) => {
       if (res) {
-        // eliminamos
         this.store.dispatch(new UI.StartLoading());
         this.fbSubs.push(
           this.dashboardService.deleteUser(username).subscribe(
@@ -160,7 +157,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   getUsers() {
     this.store.dispatch(new UI.StartLoading());
-    // this.users = usersMock.body.data;
     this.fbSubs.push(
       this.dashboardService.getAllUsers().subscribe(
         (res) => {
@@ -174,7 +170,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         },
         (err) => {
           this.store.dispatch(new UI.StopLoading());
-          // this.authService.logout();
         }
       )
     );

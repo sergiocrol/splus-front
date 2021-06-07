@@ -15,8 +15,6 @@
     0 100px 80px rgba(0, 0, 0, 0.12);
 }
 
-// background-image: linear-gradient(90deg, #ff4d4d, #f9cb28);
-
 .dashboard-container-header {
   height: 5rem;
   background-color: black;
@@ -96,7 +94,6 @@
     }
 
     input {
-      // height: 2rem;
       margin-top: 1rem;
       width: 50%;
     }
@@ -188,7 +185,6 @@
 }
 
 ::ng-deep .mat-progress-bar-fill::after {
-  // background-color: #1e457c;
   background: linear-gradient(45deg, #f9cb28 0%, #ff4d4d 100%);
 }
 
@@ -240,7 +236,6 @@
 }
 
 a {
-  // margin-top: 6rem;
   font-weight: 500;
   font-size: 1rem;
   text-decoration: none;

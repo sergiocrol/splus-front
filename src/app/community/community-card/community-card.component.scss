@@ -23,9 +23,11 @@
   .image-container {
     max-width: 220px;
     overflow: hidden;
+    min-width: 200px;
 
     @media (max-width: 599px) {
       max-width: 100%;
+      min-height: 130px;
     }
 
     img {
@@ -55,6 +57,8 @@
 
     p {
       margin-bottom: 5px;
+      max-height: 40px;
+      overflow-y: auto;
     }
   }
 

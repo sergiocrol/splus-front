@@ -13,7 +13,6 @@
         community?.logoIdentifier +
         '.sumtfile?type=2'
       "
-      alt="Photo of a Shiba Inu"
       onerror="this.src='assets/placeholder/placeholder.png';"
     />
   </div>
@@ -21,7 +20,7 @@
     <h1>
       {{ community?.name }}
     </h1>
-    <p>{{ community?.description }}</p>
+    <p class="scrollbar-custom">{{ community?.description }}</p>
     <div class="others" fxLayout="row">
       <div>
         <mat-icon aria-hidden="false" aria-label="puntuación" class="star"

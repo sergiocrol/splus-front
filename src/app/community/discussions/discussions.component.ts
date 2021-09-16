@@ -64,6 +64,7 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   async downloadMedia() {
     const jszip = new JSZip();
+    let fileType = this.selection.selected[0].fileIdentifier?.split('.')[1];
     const selectedMedia = this.selection.selected.map((el) => {
       return {
         fileId: el.fileIdentifier,
@@ -93,8 +94,8 @@ export class DiscussionsComponent implements OnInit, OnDestroy, AfterViewInit {
                 byteNumbers[i] = byteCharacters.charCodeAt(i);
             }
             const byteArray = new Uint8Array(byteNumbers);
-            const blob = new Blob([byteArray], {type: 'audio/mpeg'});
-            jszip.file(`${selectedObject[filename]}.mp3`, blob);
+            const blob = new Blob([byteArray], {type: fileType == 'mp3' ? 'audio/mpeg' : "image/jpeg"});
+            jszip.file(`${selectedObject[filename]}.`+fileType, blob);
           });
           jszip.generateAsync({ type: 'blob' }).then((content) => {
             saveAs(content, 'media.zip');

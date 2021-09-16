@@ -147,4 +147,8 @@ export class CommunityService {
   fetchMedia(fileId: string | undefined, userId: number): Observable<any> {
     return this.http.get<any>(`${this.urlMedia}?fileId=${fileId}&userId=${userId}`, this.httpOptions);
   }
+
+  fetchImage(fileIdentifier: string) {
+    return this.http.get<any>(`https://samsung.sumtotal.host/Core/${fileIdentifier}.sumtfile?type=2`, this.httpOptions);
+  }
 }
